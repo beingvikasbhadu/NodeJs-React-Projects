@@ -21,8 +21,10 @@ const loginSchema=zod.object({
 })
 
 function loginInputValidation(req,res,next)
-{
+{ console.log("req:",req.body)
+    console.log("input validation k liye aaye")
    const op=loginSchema.safeParse(req.body)
+   console.log("op:",op)
    if(op.success)
     next();
    else

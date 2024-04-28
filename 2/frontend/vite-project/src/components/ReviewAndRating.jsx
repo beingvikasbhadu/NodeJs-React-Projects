@@ -122,10 +122,12 @@ const ReviewAndRating=()=>{
      </div>
      <button onClick={async()=>{
 
-        const res=await axios.get("http://localhost:3000/review-and-rating",{headers})
-        console.log("1:",res.data.reviewAndRating)
-       const isReviewed=res.data.reviewAndRating.find(obj=>obj.item==item)
-       if(!isReviewed)
+        const res1=await axios.get("http://localhost:3000/review-and-rating",{headers})
+        console.log("1:",res1.data.reviewAndRating)
+       const isReviewed=res1.data.reviewAndRating.find(obj=>obj.item==item)
+       const res2=await axios.get("http://localhost:3000/order-info",{headers})
+       const isPurchased=res2.data.orderDetail.find(obj=>obj==obj.item==item)
+       if(!isReviewed && isPurchased)
         {const url="http://localhost:3000/review-and-rating";
         const bodyParam={
             review,

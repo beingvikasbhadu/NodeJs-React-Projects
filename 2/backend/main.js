@@ -73,6 +73,7 @@ async function getUserId(token)
 
 // Login
 app.post('/login',loginInputValidation,authorizatoin,(req,res)=>{
+    console.log("login kk liye aaye")
       const jwtToken=getJwtToken({email:req.body.email});
       console.log("logged In Successfully!")
       res.status(200).json({
@@ -116,7 +117,8 @@ app.get('/user-info',verifyJwtToken,async (req,res)=>{
 
 // GET: order-info
 app.get('/order-info',verifyJwtToken,async (req,res)=>{
-    const token=req.headers.authorizatoin.split(' ')[1];
+    console.log(req.headers)
+    const token=req.headers.authorization.split(' ')[1];
     
     const user=await getUserId(token);
     const orderDetail=await OrderDetail.find({user});
@@ -152,9 +154,9 @@ app.get('/review-and-rating',verifyJwtToken,async (req,res)=>{
 })
 
 // GET: reviews-and-ratings
-app.get('/reviews-and-ratings',verifyJwtToken,async (req,res)=>{
+app.get('/reviews-and-ratings',async (req,res)=>{
     console.log("req.headers:",req.headers)
-    const token=req.headers.authorization.split(' ')[1];
+    
     const _id=req.headers._id;
 
     const reviewsAndRatings=await ReviewAndRating.find({item:_id});
@@ -178,6 +180,15 @@ app.get('/address',verifyJwtToken,async (req,res)=>{
 })
 
 
+// GET: address-by-id
+app.get('/address-by-id',verifyJwtToken,async(req,res)=>{
+     
+    const {_id}=req.headers
+    const address=await Address.findOne({_id})
+    res.status(200).json({
+        address
+    })
+})
 
 // GET: categories
 app.get('/categories',async (req,res)=>{
@@ -202,12 +213,12 @@ app.get('/items',async (req,res)=>{
 
 // GET: item
 app.get('/item',async (req,res)=>{
-    const {item}=req.headers;
+    const {_id}=req.headers;
 
-    const itemDetail=await Item.findOne({heading:item});
+    const item=await Item.findOne({_id});
     
     res.status(200).json({
-        item:itemDetail
+        item
     })
 })
 
@@ -275,7 +286,15 @@ app.post('/cart-info',verifyJwtToken,async (req,res)=>{
 
     const {quantity,item}=req.body;
 
-    await new CartDetail({quantity,item,user}).save();
+   const isCarted=await CartDetail.findOne({item})
+   if(isCarted)
+    {
+        const new_quantity=quantity+isCarted.quantity;
+        await CartDetail.updateOne({item,user},{quantity:new_quantity})
+    }
+    else
+    {await new CartDetail({quantity,item,user}).save();
+    }
 
     console.log("cart detail saved!")
 

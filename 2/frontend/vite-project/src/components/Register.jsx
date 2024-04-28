@@ -51,14 +51,14 @@ const Register=()=>
         }
         console.log(bodyParam)
         axios.post(url,bodyParam).then((res)=>{
-            console.log(res)
+            navigate('/login')
         }).catch((err)=>{
             console.log("error:",err)
         })
     }
     return(
         <>
-        <form>
+        {/* <form>
         <input type="text" placeholder="name" name="name" onChange={handleChange}></input>
         <input type="text" placeholder="email" name="email" onChange={handleChange}></input>
         <input type="password" placeholder="password" name="password" onChange={handleChange}></input>
@@ -98,7 +98,137 @@ const Register=()=>
         </form>
         <button onClick={()=>{
             navigate('/login')
-        }}>Login</button>
+        }}>Login</button> */}
+        <div className="min-h-screen bg-gray-100 p-0 sm:p-12">
+  <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+    <form id="form" >
+      <div className="relative z-0 w-full mb-5">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+          onChange={handleChange}
+          className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+        />
+    
+        <span className="text-sm text-red-600 hidden" id="error">Name is required</span>
+      </div>
+
+      <div className="relative z-0 w-full mb-5">
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          onChange={handleChange}
+          className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+        />
+        <span className="text-sm text-red-600 hidden" id="error">Email address is required</span>
+      </div>
+
+      <div className="relative z-0 w-full mb-5">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+        />
+       
+        <span className="text-sm text-red-600 hidden" id="error">Password is required</span>
+      </div>
+
+      <div className="relative z-0 w-full mb-5">
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone"
+          onChange={handleChange}
+          className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+        />
+       
+        <span className="text-sm text-red-600 hidden" id="error">Password is required</span>
+      </div>
+
+      <fieldset className="relative z-0 w-full p-px mb-5">
+        <legend className="absolute text-gray-500 transform scale-75 -top-3 origin-0">Gender</legend>
+        <div className="block pt-3 pb-2 space-x-4">
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              onChange={(e)=>{
+                if(e.target.checked)
+                  setGender(e.target.value)
+         }}
+              className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
+            />
+            Male
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              onChange={(e)=>{
+                if(e.target.checked)
+                  setGender(e.target.value)
+         }}
+              className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
+            />
+            Female
+          </label>
+        </div>
+        <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
+      </fieldset>
+
+      <fieldset className="relative z-0 w-full p-px mb-5">
+        <legend className="absolute text-gray-500 transform scale-75 -top-3 origin-0">Role</legend>
+        <div className="block pt-3 pb-2 space-x-4">
+          <label>
+            <input
+              type="radio"
+              name="role"
+              value="buyer"
+              onChange={(e)=>{
+                if(e.target.checked)
+                  setRole(e.target.value)
+         }}
+              className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
+            />
+            Buyer
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="role"
+              value="seller"
+              onChange={(e)=>{
+                if(e.target.checked)
+                  setRole(e.target.value)
+         }}
+              className="mr-2 text-black border-2 border-gray-300 focus:border-gray-300 focus:ring-black"
+            />
+            Seller
+          </label>
+        </div>
+        <span className="text-sm text-red-600 hidden" id="error">Option has to be selected</span>
+      </fieldset>
+      <button
+              id="button"
+              type="button"
+              onClick={handleClick}
+              className="w-full px-6 py-3 4 bg-blue-600 hover:bg-blue-700 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none hover:shadow-lg focus:outline-none"
+            >
+               Register
+            </button>
+            <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+          Do not have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="#" onClick={()=>navigate('/login')}>Login</a>
+        </div>
+    </form>
+  </div>
+</div>
         </>
     )
 }

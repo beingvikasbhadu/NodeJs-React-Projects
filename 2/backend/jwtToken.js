@@ -24,6 +24,7 @@ function getJwtToken(payload)
 
 async function verifyJwtToken(req,res,next)
 {
+    console.log("req:headers:",req.headers)
     const token=req.headers.authorization.split(' ')[1]
     if(tokenBlackList.has(token))
     {
